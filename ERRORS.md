@@ -1,0 +1,1 @@
+- Difference between `var func = () => {}` v/s `var func = () => ()` v/s `var func = () => `.
