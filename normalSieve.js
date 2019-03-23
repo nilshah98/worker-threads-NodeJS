@@ -26,4 +26,4 @@ const sieve = (max,startTime) => {
   }
 
 var startTime = Date.now();
-sieve(100000,startTime)
+sieve(10000000,startTime)
