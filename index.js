@@ -10,12 +10,12 @@ const calculatePrimes = number => {
     // constant cannot be changed through re-declaration
     const numbers = [];
 
-    // const area = new SharedArrayBuffer(number);
-    // const sievex = new Int8Array(area);
+    const area = new SharedArrayBuffer(number-1);
+    const sieve = new Int8Array(area);
     for (let i = 2; i <= number; i++) {
         numbers.push(i);
     }
-
+    // console.log(sieve);
     // ceil so as to distribute the leftout equally among threads
     const segmentSize = Math.ceil(numbers.length / cpuCount);
     var segments = [];
@@ -41,7 +41,8 @@ const calculatePrimes = number => {
                     start: segment[0],
                     limit: limit,
                     size: segment.length,
-                    curr: 2
+                    curr: 2,
+                    sieve: sieve
                 }
             });
             worker.on("message", resolve);
@@ -54,20 +55,17 @@ const calculatePrimes = number => {
     });
 
     Promise.all(workers).then(res => {
-        console.log(Date.now() - startTime);
         let counter = 2;
         const primes = [];
-        res.forEach(res => {
-            res.forEach(elem => {
-                if (elem == 0){
-                    primes.push(counter);
-                }
-                counter += 1
-            })
-        })
+        sieve.forEach(elem => {
+            if (!(elem !== 0)) {
+                primes.push(counter);
+            }
+            counter += 1;
+        });
         console.log(primes.length);
         console.log(Date.now() - startTime);
-    })
+    });
 
     // var start = 2;
 

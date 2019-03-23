@@ -4,7 +4,9 @@ const size = workerData.size;
 const start = workerData.start;
 const limit = workerData.limit;
 var curr = workerData.curr;
-const sieve = new Array(size).fill(0);
+const sieve = workerData.sieve;
+// console.log(sieve,start,size);
+// const sieve = new Array(size).fill(0);
 
 while(curr <= limit && curr <= (start+size-1) ){
     if(start % curr){
@@ -15,15 +17,15 @@ while(curr <= limit && curr <= (start+size-1) ){
     
     for(index; index<size; index += curr){
         if((start + index) != curr){
-            sieve[index] = 1;
+            sieve[start + index - 2] = 1;
         }
     }
 
     curr += 1
 
 }
-
-parentPort.postMessage(sieve);
+// console.log("end",sieve,start);
+parentPort.postMessage("done");
 
 // parentPort.on("message",(data) => {
 
