@@ -136,8 +136,11 @@ const run = async () => {
     const endTime = process.hrtime(stTime);
     spinner.succeed(`(worker) Number of primes : ${res}`);
     const time1 = endTime[0] * NS_PER_SEC + endTime[1];
-    spinner.info(
-        `(worker) Benchmark took   : ${time1} nanoseconds`
+    spinner.stopAndPersist(
+        {
+            "text":`(main)   Benchmark took   : ${time1} nanoseconds\n`,
+            "symbol":"⌛"
+        }
     );
 
     const spinner2 = ora("Calculating number of primes-").start();
@@ -146,10 +149,13 @@ const run = async () => {
     const endTime2 = process.hrtime(stTime2);
     spinner2.succeed(`(main)   Number of primes : ${res}`);
     const time2 = endTime2[0] * NS_PER_SEC + endTime2[1];
-    spinner2.info(
-        `(main)   Benchmark took   : ${time2} nanoseconds\n`
+    spinner2.stopAndPersist(
+        {
+            "text":`(main)   Benchmark took   : ${time2} nanoseconds\n`,
+            "symbol":"⌛"
+        }
     );
-    spinner2.succeed(`Difference between worker and main : ${(time2 - time1)} nanoseconds`)
+    spinner2.stopAndPersist({"text":`Difference between worker and main : ${(time2 - time1)} nanoseconds`,"symbol":"⏱️"});
 };  
 
 
