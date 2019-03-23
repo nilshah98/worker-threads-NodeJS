@@ -138,7 +138,7 @@ const run = async () => {
     const time1 = endTime[0] * NS_PER_SEC + endTime[1];
     spinner.stopAndPersist(
         {
-            "text":`(main)   Benchmark took   : ${time1} nanoseconds\n`,
+            "text":`(worker) Benchmark took   : ${time1} nanoseconds\n`,
             "symbol":"⌛"
         }
     );
