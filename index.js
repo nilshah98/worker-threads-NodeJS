@@ -6,6 +6,7 @@ const ora = require("ora");
 
 const cpuCount = os.cpus().length;
 const workerPath = path.resolve("calcPrimes.js");
+const NS_PER_SEC = 1e9;
 
 const calculatePrimes = number => {
     return new Promise((resolve, reject) => {
@@ -114,6 +115,22 @@ const normalSieve = n => {
     });
 };
 
+const calcTime = async (inp,func,label) => {
+    const spinner = ora("Calculating number of primes-").start();
+    const stTime = process.hrtime();
+    var res = await func(inp);
+    const endTime = process.hrtime(stTime);
+    spinner.succeed(`(${label}) Number of primes : ${res}`);
+    const time = endTime[0] * NS_PER_SEC + endTime[1];
+    spinner.stopAndPersist(
+        {
+            "text":`(${label}) Benchmark took   : ${time} nanoseconds\n`,
+            "symbol":"⌛"
+        }
+    );
+    return time;
+}
+
 const run = async () => {
     const { primeRange } = await inquirer.prompt([
         {
@@ -123,39 +140,15 @@ const run = async () => {
             default: 100
         }
     ]);
+
     // Written using then
     // calculatePrimes(primeRange).then((res) => {
     //     spinner.succeed(`Number of primes : ${res[0]}`)
     // });
-    const NS_PER_SEC = 1e9;
 
-
-    const spinner = ora("Calculating number of primes-").start();
-    const stTime = process.hrtime();
-    var res = await calculatePrimes(primeRange);
-    const endTime = process.hrtime(stTime);
-    spinner.succeed(`(worker) Number of primes : ${res}`);
-    const time1 = endTime[0] * NS_PER_SEC + endTime[1];
-    spinner.stopAndPersist(
-        {
-            "text":`(worker) Benchmark took   : ${time1} nanoseconds\n`,
-            "symbol":"⌛"
-        }
-    );
-
-    const spinner2 = ora("Calculating number of primes-").start();
-    const stTime2 = process.hrtime();
-    var res = await normalSieve(primeRange);
-    const endTime2 = process.hrtime(stTime2);
-    spinner2.succeed(`(main)   Number of primes : ${res}`);
-    const time2 = endTime2[0] * NS_PER_SEC + endTime2[1];
-    spinner2.stopAndPersist(
-        {
-            "text":`(main)   Benchmark took   : ${time2} nanoseconds\n`,
-            "symbol":"⌛"
-        }
-    );
-    spinner2.stopAndPersist({"text":`Difference between worker and main : ${(time2 - time1)} nanoseconds`,"symbol":"⏱️"});
+    const workerTime = await calcTime(primeRange,calculatePrimes,"worker");
+    const localTime = await calcTime(primeRange,normalSieve,"main");
+    console.log(`⏱️ Time difference between worker and main thread : ${localTime-workerTime} nanoseconds`);
 };  
 
 
@@ -163,7 +156,6 @@ run();
 
 /* 
 TODO =>
-0. Clean calculateTime function
 1. Analysis for SharedBufferArray v/s NormalArray
 2. Recurring same process on worker thread after messaging mainThread
 3. Message passing efficiency
