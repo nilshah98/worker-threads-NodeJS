@@ -5,3 +5,6 @@
 
 # Promises
 - Returns a promise object which can either return resolve, or reject and accordingly call .then() or .catch()
+
+# ArrayBuffer.transfer()
+- ArrayBuffer.transfer() method is still in experimental phase, so had to slice it, like polyfills would
