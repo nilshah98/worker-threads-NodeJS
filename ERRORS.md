@@ -1,2 +1,3 @@
 - Difference between `var func = () => {}` v/s `var func = () => ()` v/s `var func = () => `.
 - After a `Promise` is resolved, it cannot go back to pending state. More so, causing `Promise.all()` to execute for each single instance as well, now.
+- Need to fill Array object before passing, else recieve something like - `<2 empty items>` in console.

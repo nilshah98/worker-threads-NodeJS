@@ -8,3 +8,6 @@
 
 # ArrayBuffer.transfer()
 - ArrayBuffer.transfer() method is still in experimental phase, so had to slice it, like polyfills would
+
+# Array.forEach()
+- Can't use a break statement in it
