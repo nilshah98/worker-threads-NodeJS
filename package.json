@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "benchmark": "^2.1.4",
     "inquirer": "^6.2.2",
     "ora": "^3.2.0"
   }

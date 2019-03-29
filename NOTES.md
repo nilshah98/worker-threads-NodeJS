@@ -11,3 +11,7 @@
 
 # Array.forEach()
 - Can't use a break statement in it
+
+# Module Exports
+- While requiring an exported module, the parser goes through the whole of required file, and executes everything, if a function is called, that will run
+- Whereas only the exported ones are put into context
