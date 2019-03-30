@@ -13,7 +13,7 @@ const calcTime = async (inp,func,label) => {
     const stTime = process.hrtime();
     var res = await func(inp);
     const endTime = process.hrtime(stTime);
-    spinner.succeed(`(${label}) Number of primes : ${res}`);
+    spinner.succeed(` (${label}) Number of primes : ${res}`);
     const time = endTime[0] * NS_PER_SEC + endTime[1];
     spinner.stopAndPersist(
         {
@@ -40,10 +40,10 @@ const run = async () => {
     // });
 
     const workerArrayTime = await calcTime(primeRange,array,"worker array");
-    const workerArrayBufferTime = await calcTime(primeRange,arrayBuffer,"worker arrayBufer");
+    const workerArrayBufferTime = await calcTime(primeRange,arrayBuffer,"worker arrayBuffer");
     const workerSharedArrayBufferTime = await calcTime(primeRange,sharedArrayBuffer,"worker sharedArrayBuffer");
     const localTime = await calcTime(primeRange,normalSieve,"main");
-    // console.log(`⏱️ Time difference between worker and main thread : ${localTime-workerTime} nanoseconds`);
+    console.log(`⏱️ Time difference between worker (sharedArrayBuffer) and main thread : ${localTime-workerSharedArrayBufferTime} nanoseconds`);
 
 };  
 
