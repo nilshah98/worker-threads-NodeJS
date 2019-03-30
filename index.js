@@ -17,7 +17,7 @@ const calcTime = async (inp,func,label) => {
     const time = endTime[0] * NS_PER_SEC + endTime[1];
     spinner.stopAndPersist(
         {
-            "text":`(${label}) Benchmark took   : ${time} nanoseconds\n`,
+            "text":`(${label}) Benchmark took   : ${time/NS_PER_SEC} seconds\n`,
             "symbol":"⌛"
         }
     );
@@ -43,7 +43,7 @@ const run = async () => {
     const workerArrayBufferTime = await calcTime(primeRange,arrayBuffer,"worker arrayBuffer");
     const workerSharedArrayBufferTime = await calcTime(primeRange,sharedArrayBuffer,"worker sharedArrayBuffer");
     const localTime = await calcTime(primeRange,normalSieve,"main");
-    console.log(`⏱️ Time difference between worker (sharedArrayBuffer) and main thread : ${localTime-workerSharedArrayBufferTime} nanoseconds`);
+    console.log(`⏱️ Time difference between main thread and worker (sharedArrayBuffer) : ${(localTime-workerSharedArrayBufferTime)/NS_PER_SEC} seconds`);
 
 };  
 

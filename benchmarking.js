@@ -88,7 +88,7 @@ const run = async () => {
                 meanTime: event.target.stats.mean,
                 noOfTest: event.target.stats.sample.length
             });
-            console.log("Mean Exec time : " + event.target.stats.mean);
+            console.log(`Mean Exec time : ${event.target.stats.mean} seconds`);
             console.log(
                 "Number of tests : " + event.target.stats.sample.length
             );
