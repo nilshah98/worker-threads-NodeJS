@@ -15,6 +15,13 @@
 - CLI
 - BenchMarking
 
+# Working
+## Interactive CLI
+<img src="./static/workerIndex.gif" width=800px height=auto>
+
+## Benchmarking
+<img src="./static/workerBench.gif" width=800px height=auto>
+
 # Benchmarks
 ## CPU
 `CPU family:          6 `  
