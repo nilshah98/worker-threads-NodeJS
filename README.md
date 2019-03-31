@@ -1,25 +1,45 @@
-# TODO:
-- Worker Thread intro
-- - What?
-- - Why?
-- - Links
-- - Operations
-- - - Initialise
-- - - Message Passing
-- Data Structure Intro
-- - Array
-- - - Serialise
-- - ArrayBuffer
-- - SharedArrayBuffer
-- - - Atomics
-- CLI
-- BenchMarking
+# Idea
+## Primes
+- Calculating primes is one of the most computationally intensive task, and an important component in computer security.  
+- This repo aims at calculating prime numbers, in a certain range, using multithreading concepts in NodeJS.  
+- Basic sieve method is used to collect prime numbers. The range is divided between worker-threads here.  
+- And the number of worker threads spawned is equal to the number of cores, to maximise output. If more spawned need to switch between threads, which takes time, if more spawned, cores underutilized.
 
-# Working
+## Worker Threads
+- Javascript can handle I/O events easily, owing to EventLoop. Hence, Node can handle multiple HTTP requests pretty seamlessly.  
+- But, if Node needs to do heavy computation, it cannot rely on EventLoop, since it runs on single-thread, and all the cores aren't optimally utilized. Here is when, `worker-thread` comes in.  
+- From the Worker-Thread Docs-  
+- `Workers (threads) are useful for performing CPU-intensive JavaScript operations. They will not help much with I/O-intensive work. Node.js’s built-in asynchronous I/O operations are more efficient than Workers can be.`  
+- For tasks like these, even `child_processes` or `cluster` can be used. Although, they don't provide support for transferring or sharing memory as of now.  
+
+### Links
+- [EventLoop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
+- [Worker-Thread Docs](https://nodejs.org/api/worker_threads.html#worker_threads_worker_threads)
+
+## Data Structure
+- For initialising a worker, passing data in workerData actually clones the data  
+- Whereas, for passing messages, using `worker.postMessage()`, data is passed either by cloning, transfering or sharing
+- Cloning : `Arrays` are serialised then cloned, and desearialised. Since, the raw data segregation isn't know.
+- Transfering : `ArrayBuffer` operate on this, since, they use `TypedArrays` such as `Uint8Array` as layer, owing to which, their raw segment sizes are known, and can be transfered easily.  
+- Sharing : `SharedArrayBuffer` is similar to ArrayBuffer, where you need to wrap it using `TypedArrays`, but they can be shared. To maintain concurrency, `Atomics` library is used alongwith it, to perform concurrent opertations  
+
+### Links
+- [Array - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+- [ArrayBuffer - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
+- [SharedArrayBuffer - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
+- [TypedArray - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
+- [A crash course in memory management - Mozilla Hacks](https://hacks.mozilla.org/2017/06/a-crash-course-in-memory-management/)
+
+## Other Tools used
+- [Inquirer.JS](https://github.com/SBoudrias/Inquirer.js/) - To create command line interfaces, in a whim.
+- [Ora](https://github.com/sindresorhus/ora) - Elegant terminal spinners for your command line interfaces.
+- [Benchmark.JS](https://github.com/bestiejs/benchmark.js/) - A robust benchmarking library, with high-resolution timers.
+
+# Interface
 ## Interactive CLI
 <img src="./static/workerIndex.gif" width=800px height=auto>
 
-## Benchmarking
+## Benchmarking and write to CSV
 <img src="./static/workerBench.gif" width=800px height=auto>
 
 # Benchmarks
@@ -28,7 +48,7 @@
 `Model name:          Intel(R) Core(TM) i5-8600K CPU @ 3.60GHz  `
 
 ## OS
-### Ubuntu 18.04
+`Ubuntu 18.04`
 
 | Range    | Thread | DataStructure     | MeanExecTime(in secs)    | NumberOfCycles | 
 |----------|--------|-------------------|--------------------------|----------------| 
