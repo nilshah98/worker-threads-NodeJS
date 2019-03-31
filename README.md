@@ -44,8 +44,9 @@
 
 # ToDo
 - [ ] Add serialised Array and benchmark  
+- [ ] Plot the benchmark data  
 - [ ] Benchmark message passing  
-- [ ] Implement communication between workers  
+- [ ] Implement communication between workers 
 
 # Benchmarks
 - To calculate prime numbers upto a Range.
@@ -86,3 +87,13 @@
 | 20000000 | worker | arrayBuffer       | 0.8236841264000001       | 10             | 
 | 20000000 | worker | array             | 3.2359141328333334       | 6              | 
 | 20000000 | main   | normalSieve       | 3.213333790833333        | 6              | 
+
+# Addendum
+- Notes and errors encounterd, have been added to [NOTES.md](./NOTES.md)
+
+# Contributing
+- Always open for `enchancements` and `bux-fixes`!
+
+### Contributors
+- [@nilshah98](https://github.com/nilshah98)
+
