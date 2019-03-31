@@ -57,6 +57,11 @@
 ## OS
 `Ubuntu 18.04`
 
+## Graph
+<img src="./static/graph.png" width=800px height=auto>
+
+## Data
+
 | Range    | Thread | DataStructure     | MeanExecTime(in secs)    | NumberOfCycles | 
 |----------|--------|-------------------|--------------------------|----------------| 
 | 100      | worker | sharedArrayBuffer | 0.05451655452083334      | 48             | 
@@ -88,6 +93,10 @@
 | 20000000 | worker | array             | 3.2359141328333334       | 6              | 
 | 20000000 | main   | normalSieve       | 3.213333790833333        | 6              | 
 
+
+- Over large inputs, worker thread works better than main threads.
+- Also, sharedArrayBuffer gives best performance over various data structures.
+- When using sharedArrayBuffer beware, to use Atomics library to maintain data consistency.
 # Addendum
 - Notes and errors encounterd, have been added to [NOTES.md](./NOTES.md)
 
