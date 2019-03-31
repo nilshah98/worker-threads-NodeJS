@@ -9,7 +9,7 @@
 - Javascript can handle I/O events easily, owing to EventLoop. Hence, Node can handle multiple HTTP requests pretty seamlessly.  
 - But, if Node needs to do heavy computation, it cannot rely on EventLoop, since it runs on single-thread, and all the cores aren't optimally utilized. Here is when, `worker-thread` comes in.  
 - From the Worker-Thread Docs-  
-- `Workers (threads) are useful for performing CPU-intensive JavaScript operations. They will not help much with I/O-intensive work. Node.js’s built-in asynchronous I/O operations are more efficient than Workers can be.`  
+`Workers (threads) are useful for performing CPU-intensive JavaScript operations. They will not help much with I/O-intensive work. Node.js’s built-in asynchronous I/O operations are more efficient than Workers can be.`  
 - For tasks like these, even `child_processes` or `cluster` can be used. Although, they don't provide support for transferring or sharing memory as of now.  
 
 ### Links
@@ -42,7 +42,13 @@
 ## Benchmarking and write to CSV
 <img src="./static/workerBench.gif" width=800px height=auto>
 
+# ToDo
+- [ ] Add serialised Array and benchmark  
+- [ ] Benchmark message passing  
+- [ ] Implement communication between workers  
+
 # Benchmarks
+- To calculate prime numbers upto a Range.
 ## CPU
 `CPU family:          6 `  
 `Model name:          Intel(R) Core(TM) i5-8600K CPU @ 3.60GHz  `
