@@ -44,7 +44,7 @@
 
 # ToDo
 - [ ] Add serialised Array and benchmark  
-- [ ] Plot the benchmark data  
+- [x] Plot the benchmark data  
 - [ ] Benchmark message passing  
 - [ ] Implement communication between workers 
 
